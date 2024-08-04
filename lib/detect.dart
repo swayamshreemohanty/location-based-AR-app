@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:math';
-import 'info.dart';
+
 import 'package:arkit_plugin/arkit_plugin.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math_64.dart' as vector;
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
+
+import 'info.dart';
 
 class ImageDetectionPage extends StatefulWidget {
   @override
@@ -14,21 +16,23 @@ class ImageDetectionPage extends StatefulWidget {
 }
 
 enum WidgetDistance { ready, navigating }
+
 enum WidgetCompass { scanning, directing }
+
 enum TtsState { playing, stopped }
 
 class _ImageDetectionPageState extends State<ImageDetectionPage> {
   WidgetDistance situationDistance = WidgetDistance.navigating;
   WidgetCompass situationCompass = WidgetCompass.directing;
 
-  ARKitController arkitController;
+  late ARKitController arkitController;
   bool anchorWasFound = false;
-  FlutterTts flutterTts;
+  final flutterTts = FlutterTts();
   int _clearDirection = 0;
   double distance = 0;
   int _distance = 0;
   double targetDegree = 0;
-  Timer timer;
+  late Timer timer;
   TtsState ttsState = TtsState.stopped;
 
   //calculation formula of angel between 2 different points
@@ -61,40 +65,45 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
 
   //device compass
   void calculateDegree() {
-    FlutterCompass.events.listen((double direction) {
+    FlutterCompass.events?.listen((CompassEvent compassEvent) {
       setState(() {
-        if (targetDegree != null && direction != null) {
-          _clearDirection = targetDegree.truncate() - direction.truncate();
-        }
+        _clearDirection =
+            targetDegree.truncate() - (compassEvent.heading ?? 0).truncate();
       });
     });
   }
 
   //distance between faculty and device coordinates
   void _getlocation() async {
-    //if you want to check location service permissions use checkGeolocationPermissionStatus method
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Geolocator.requestPermission().then((value) async {
+      if (value == LocationPermission.denied) {
+        return;
+      }
 
-    final double _facultypositionlat = 38.681527;
-    final double _facultypositionlong = 39.196072;
+      //if you want to check location service permissions use checkGeolocationPermissionStatus method
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-    distance = await Geolocator().distanceBetween(position.latitude,
-        position.longitude, _facultypositionlat, _facultypositionlong);
+      final double _facultypositionlat = 38.681527;
+      final double _facultypositionlong = 39.196072;
 
-    targetDegree = angleFromCoordinate(position.latitude, position.longitude,
-        _facultypositionlat, _facultypositionlong);
-    calculateDegree();
+      distance = await Geolocator.distanceBetween(position.latitude,
+          position.longitude, _facultypositionlat, _facultypositionlong);
+
+      targetDegree = angleFromCoordinate(position.latitude, position.longitude,
+          _facultypositionlat, _facultypositionlong);
+      calculateDegree();
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _getlocation(); //first run
-    flutterTts = FlutterTts();
+
     timer = new Timer.periodic(Duration(seconds: 7), (timer) {
       _getlocation();
-      if (distance < 50 && distance != 0 && distance != null) {
+      if (distance < 50 && distance != 0) {
         setState(() {
           situationDistance = WidgetDistance.ready;
           situationCompass = WidgetCompass.scanning;
@@ -112,7 +121,7 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
 
   @override
   void dispose() {
-    arkitController?.dispose();
+    arkitController.dispose();
     flutterTts.stop();
     super.dispose();
   }
@@ -243,8 +252,9 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
         return scanningWidget();
       case WidgetCompass.directing:
         return directingWidget();
+      default:
+        return directingWidget();
     }
-    return directingWidget();
   }
 
   Widget distanceProvider() {
@@ -253,8 +263,9 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
         return readyWidget();
       case WidgetDistance.navigating:
         return navigateWidget();
+      default:
+        return navigateWidget();
     }
-    return navigateWidget();
   }
 
   void onARKitViewCreated(ARKitController arkitController) {
@@ -264,12 +275,12 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
 
   void onAnchorWasFound(ARKitAnchor anchor) {
     if (anchor is ARKitImageAnchor) {
-        //if you want to block AR while you aren't close to target > add "if (situationDistance==WidgetDistance.ready)" here
+      //if you want to block AR while you aren't close to target > add "if (situationDistance==WidgetDistance.ready)" here
       setState(() => anchorWasFound = true);
 
       final materialCard = ARKitMaterial(
         lightingModelName: ARKitLightingModel.lambert,
-        diffuse: ARKitMaterialProperty(image: 'firatcard.png'),
+        diffuse: ARKitMaterialProperty.image('firatcard.png'),
       );
 
       final image =

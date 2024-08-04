@@ -3,19 +3,19 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=3.4.4 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
 
-  arkit_plugin: ^0.3.0
-  geolocator: ^5.1.5
-  video_player: ^0.10.5
-  cupertino_icons: ^0.1.2
+  arkit_plugin: ^1.1.0
+  geolocator: ^12.0.0
+  video_player: ^2.9.1
+  cupertino_icons: ^1.0.8
   flutter_tts:
-  flutter_compass: ^0.3.4
+  flutter_compass: ^0.8.0
 
 dev_dependencies:
   flutter_test:

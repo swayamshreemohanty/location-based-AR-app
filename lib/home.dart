@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:video_player/video_player.dart';
+
 import 'detect.dart';
 
 class HomeVideo extends StatefulWidget {
@@ -10,9 +9,8 @@ class HomeVideo extends StatefulWidget {
 }
 
 class _HomeVideoState extends State<HomeVideo> {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   bool hasFinished = false;
-  Timer timer;
 
   @override
   void initState() {
@@ -37,8 +35,8 @@ class _HomeVideoState extends State<HomeVideo> {
               child: FittedBox(
                 fit: BoxFit.cover,
                 child: SizedBox(
-                  width: _controller.value.size?.width ?? 0,
-                  height: _controller.value.size?.height ?? 0,
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
                   child: VideoPlayer(_controller),
                 ),
               ),
@@ -76,7 +74,7 @@ class _HomeVideoState extends State<HomeVideo> {
 class FadeRoute extends PageRouteBuilder {
   final Widget page;
 
-  FadeRoute({this.page})
+  FadeRoute({required this.page})
       : super(
           pageBuilder: (
             BuildContext context,
