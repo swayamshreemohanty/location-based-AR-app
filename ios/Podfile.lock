@@ -1,32 +1,30 @@
 PODS:
   - arkit_plugin (0.0.1):
     - Flutter
+    - GLTFSceneKit
   - Flutter (1.0.0)
   - flutter_compass (0.0.1):
     - Flutter
   - flutter_tts (0.0.1):
     - Flutter
-  - geolocator (5.1.5):
+  - geolocator_apple (1.2.0):
     - Flutter
-  - google_api_availability (2.0.1):
+  - GLTFSceneKit (0.3.0)
+  - video_player_avfoundation (0.0.1):
     - Flutter
-  - location_permissions (2.0.3):
-    - Flutter
-  - video_player (0.0.1):
-    - Flutter
-  - video_player_web (0.0.1):
-    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - arkit_plugin (from `.symlinks/plugins/arkit_plugin/ios`)
   - Flutter (from `Flutter`)
   - flutter_compass (from `.symlinks/plugins/flutter_compass/ios`)
   - flutter_tts (from `.symlinks/plugins/flutter_tts/ios`)
-  - geolocator (from `.symlinks/plugins/geolocator/ios`)
-  - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
-  - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
-  - video_player_web (from `.symlinks/plugins/video_player_web/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
+
+SPEC REPOS:
+  trunk:
+    - GLTFSceneKit
 
 EXTERNAL SOURCES:
   arkit_plugin:
@@ -37,28 +35,20 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_compass/ios"
   flutter_tts:
     :path: ".symlinks/plugins/flutter_tts/ios"
-  geolocator:
-    :path: ".symlinks/plugins/geolocator/ios"
-  google_api_availability:
-    :path: ".symlinks/plugins/google_api_availability/ios"
-  location_permissions:
-    :path: ".symlinks/plugins/location_permissions/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
-  video_player_web:
-    :path: ".symlinks/plugins/video_player_web/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
 
 SPEC CHECKSUMS:
-  arkit_plugin: bac4df15d3c0bcafd4acaf323acefdeee1ccf224
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  arkit_plugin: c08c4e6f334a922154c2caf2f6fadfaefb51c181
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_compass: cbbd285cea1584c7ac9c4e0c3e1f17cbea55e855
   flutter_tts: 0f492aab6accf87059b72354fcb4ba934304771d
-  geolocator: 80aba2bb48f8c7dfc5a8b70b9d13fc3edc8399c4
-  google_api_availability: 163b30f802e6148c67f092aa4501c90ddd8eec8d
-  location_permissions: 195ff2a1182fa9029ef3f2653156961ee5a1e40b
-  video_player: 69c5f029fac4ffe4fc8a85ea7f7b793709661549
-  video_player_web: da8cadb8274ed4f8dbee8d7171b420dedd437ce7
+  geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
+  GLTFSceneKit: d1b437c514ba2aed5555afb0fddd64e030612d57
+  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
 
-PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.15.2

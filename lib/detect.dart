@@ -84,8 +84,8 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
-      final double _facultypositionlat = 38.681527;
-      final double _facultypositionlong = 39.196072;
+      final double _facultypositionlat = 20.156065;
+      final double _facultypositionlong = 85.728949;
 
       distance = await Geolocator.distanceBetween(position.latitude,
           position.longitude, _facultypositionlat, _facultypositionlong);
